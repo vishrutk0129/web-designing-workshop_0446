@@ -1,6 +1,80 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> COLLEGE TIMETABLE </title>
-    </head>
+<head>
+    <title>College Timetable</title>
+</head>
+<body>
+
+<table border="1" align="center" cellpadding="8" cellspacing="0">
+    <caption>College Timetable - CSE Department</caption>
+    <tr>
+        <th>Day/Time</th>
+        <th>9:00-10:00</th>
+        <th>10:00-11:00</th>
+        <th>11:00-12:00</th>
+        <th>12:00-1:00</th>
+        <th>1:00-2:00</th>
+        <th>2:00-3:00</th>
+        <th>3:00-4:00</th>
+    </tr>
+    <!-- Monday -->
+    <tr>
+        <td>Monday</td>
+        <td>Mathematics</td>
+        <td>English</td>
+        <td>Physics</td>
+        <td rowspan="5" align="center">Break</td>
+        <td colspan="2" align="center">Computer Lab</td>
+        <td>Sports</td>
+    </tr>
+    <!-- Tuesday -->
+    <tr>
+        <td>Tuesday</td>
+        <td colspan="2" align="center">C Programming</td>
+        <td>Physics</td>
+        <td colspan="2" align="center">Electronics Lab</td>
+        <td>Library</td>
+    </tr>
+    <!-- Wednesday -->
+    <tr>
+        <td>Wednesday</td>
+        <td>Mathematics</td>
+        <td>English</td>
+        <td>Physics</td>
+        <td>Computer Networks</td>
+        <!-- Nested Table for Lab Details -->
+        <td colspan="2">
+            <table border="1" width="100%" cellpadding="4" cellspacing="0">
+                <caption>Lab Details</caption>
+                <tr>
+                    <td>Batch A</td>
+                    <td>DBMS Lab</td>
+                </tr>
+                <tr>
+                    <td>Batch B</td>
+                    <td>OS Lab</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- Thursday -->
+    <tr>
+        <td>Thursday</td>
+        <td colspan="2" align="center">Workshop</td>
+        <td>Physics</td>
+        <td>Mathematics</td>
+        <td>English</td>
+        <td>Seminar</td>
+    </tr>
+    <!-- Friday -->
+    <tr>
+        <td>Friday</td>
+        <td>Computer Networks</td>
+        <td>English</td>
+        <td>Physics</td>
+        <td colspan="3" align="center">Project Work</td>
+    </tr>
+</table>
+
+</body>
 </html>
