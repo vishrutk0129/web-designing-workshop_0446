@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PixelCrypt — Secret Image Decoder</title>
+  <style>
+    body {
+      background: #0b1120;
+      color: #f8fafc;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #1e293b;
+      padding: 28px;
+      border-radius: 16px;
+      width: 420px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    h2 { margin: 0 0 6px; color: #38bdf8; }
+    p { margin: 0 0 18px; color: #94a3b8; font-size: 0.9rem; }
+    canvas {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid #334155;
+      margin-bottom: 16px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: #fff;
+      font-size: 1rem;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #10b981;
+      color: #064e3b;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #34d399; }
+    .result {
+      margin-top: 16px;
+      padding: 14px;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-weight: 600;
+      display: none;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>PixelCrypt</h2>
+  <p>A secret message is hidden inside this image's pixels.</p>
+
+  <!-- The image where the secret text lives -->
+  <canvas id="secretImage" width="400" height="220"></canvas>
+
+  <input type="password" id="passwordInput" placeholder="Enter password to unlock secret...">
+  <button onclick="extractMessage()">Extract Hidden Message</button>
+
+  <div id="output" class="result"></div>
+</div>
+
+<script>
+  const SECRET_TEXT = "Project Top Secret: Cybersecurity ";
+  const PASSWORD    = "admin123";
+  const STOP_MARKER = "###";
+
+  const canvas = document.getElementById("secretImage");
+  const ctx = canvas.getContext("2d");
+
+  // 1. Draw a nice sunset mountain picture and hide the text inside it
+  window.onload = function () {
+    // Draw sky gradient
+    const sky = ctx.createLinearGradient(0, 0, 0, 220);
+    sky.addColorStop(0, "#1e1b4b");
+    sky.addColorStop(0.6, "#be185d");
+    sky.addColorStop(1, "#f59e0b");
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, 400, 220);
+
+    // Draw sun
+    ctx.fillStyle = "#fef08a";
+    ctx.beginPath();
+    ctx.arc(200, 130, 35, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw mountains
+    ctx.fillStyle = "#0f172a";
+    ctx.beginPath();
+    ctx.moveTo(0, 220); ctx.lineTo(110, 110); ctx.lineTo(230, 220);
+    ctx.moveTo(160, 220); ctx.lineTo(290, 95); ctx.lineTo(400, 220);
+    ctx.fill();
+
+    // Hide the secret message inside the pixels
+    hideInPixels(SECRET_TEXT, PASSWORD);
+  };
+
+  // Helper: Scramble or unscramble text using the password (XOR Cipher)
+  function xorLock(text, key) {
+    let output = "";
+    for (let i = 0; i < text.length; i++) {
+      output += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return output;
+  }
+
+  // 2. Embed message bits into the Least Significant Bit (LSB) of pixels
+  function hideInPixels(message, key) {
+    const lockedText = xorLock(message, key) + STOP_MARKER;
+    let binary = "";
+    for (let i = 0; i < lockedText.length; i++) {
+      binary += lockedText.charCodeAt(i).toString(2).padStart(8, "0");
+    }
+
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = imgData.data; // [Red, Green, Blue, Alpha, ...]
+
+    let bitIndex = 0;
+    for (let i = 0; i < pixels.length && bitIndex < binary.length; i++) {
+      if (i % 4 === 3) continue; // Skip transparency (Alpha)
+      pixels[i] = (pixels[i] & ~1) | Number(binary[bitIndex]);
+      bitIndex++;
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  // 3. Read the bits back out when the user clicks "Extract"
+  function extractMessage() {
+    const enteredPass = document.getElementById("passwordInput").value;
+    const outputBox = document.getElementById("output");
+
+    if (!enteredPass) {
+      alert("Please enter a password first!");
+      return;
+    }
+
+    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let bits = "";
+    let extracted = "";
+
+    for (let i = 0; i < pixels.length; i++) {
+      if (i % 4 === 3) continue;
+      bits += (pixels[i] & 1); // Read the last bit
+
+      if (bits.length === 8) {
+        extracted += String.fromCharCode(parseInt(bits, 2));
+        bits = "";
+
+        if (extracted.endsWith(STOP_MARKER)) {
+          const cleanCipher = extracted.slice(0, -STOP_MARKER.length);
+          const finalMessage = xorLock(cleanCipher, enteredPass);
+
+          outputBox.style.display = "block";
+          outputBox.innerText = "Decoded Message: " + finalMessage;
+          return;
+        }
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
