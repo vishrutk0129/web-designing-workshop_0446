@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 18 - ABC College Admission 2026</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Georgia, serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #19247c;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            flex: 1;
+            max-width: 750px;
+            width: 90%;
+            margin: 20px auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        caption {
+            margin-bottom: 6px;
+        }
+        th, td {
+            border: 1px solid #888;
+            padding: 8px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #e6e9f5;
+            text-align: center;
+        }
+        fieldset {
+            padding: 15px 20px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            margin-top: 4px;
+            margin-bottom: 14px;
+            padding: 4px;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 300px;
+            max-width: 100%;
+        }
+        textarea {
+            width: 530px;
+            max-width: 100%;
+        }
+        footer {
+            background-color: #19247c;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ABC College Admission 2026</h1>
+    </header>
+
+    <main>
+        <section aria-labelledby="courses-heading">
+            <h2 id="courses-heading">Courses and Fees</h2>
+            <table>
+                <caption>Available Courses</caption>
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Seats</th>
+                        <th>Fees</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>B.Tech CSE</td>
+                        <td>120</td>
+                        <td>&#8377;90,000</td>
+                    </tr>
+                    <tr>
+                        <td>BCA</td>
+                        <td>60</td>
+                        <td>&#8377;45,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section aria-label="Admission Application Form">
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>Application Form</legend>
+
+                    <label for="student-name">Name:</label><br>
+                    <input type="text" id="student-name" name="name" required><br>
+
+                    <label for="student-email">Email:</label><br>
+                    <input type="email" id="student-email" name="email" required><br>
+
+                    <label for="student-course">Course:</label><br>
+                    <select id="student-course" name="course">
+                        <option value="B.Tech CSE">B.Tech CSE</option>
+                        <option value="BCA">BCA</option>
+                    </select><br>
+
+                    <label for="student-statement">Statement:</label><br>
+                    <textarea id="student-statement" name="statement" rows="4"></textarea><br>
+
+                    <button type="submit">Apply</button>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 ABC College
+    </footer>
+</body>
+</html>
