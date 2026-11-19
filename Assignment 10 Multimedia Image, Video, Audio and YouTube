@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 10 - Multimedia</title>
+</head>
+<body>
+    <h3>Image</h3>
+    <img src="https://imgs.search.brave.com/c0xu2cb0PJilYpnFlqWcalKjf2v17X5XnvEEqTeePHE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZS1zdGF0aWMuY29s/bGVnZWR1bmlhLmNv/bS9wdWJsaWMvcmV2/aWV3UGhvdG9zLzEx/NDQ2MDMvZGFhOGUz/YzctYTAzMS00Nzky/LWE1MDEtZDIwMThj/OTlhOTA2LTFfYWxs/XzI0OTgyLmpwZw" alt="College campus" width="200" height="160">
+
+    <h3>Video</h3>
+    <video width="260" controls>
+        <source src="sample.mp4" type="video/mp4">
+    </video>
+
+    <h3>Audio</h3>
+    <audio controls>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <h3>YouTube</h3>
+    <iframe width="360" height="215" src="https://www.youtube.com/embed/vGoiqOA6O2g" title="YouTube video player" allowfullscreen></iframe>
+</body>
+</html>
